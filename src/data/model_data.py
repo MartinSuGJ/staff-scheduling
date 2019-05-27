@@ -10,10 +10,10 @@ import pandas as pd
 from config import *
 
 
-def construct_model_data(data_file, staff_type='circulator'):
+def construct_model_data(data_file, staff_type, shift_scenario):
     excel = pd.ExcelFile(data_file)
     block = excel.parse('Block')
-    shift = excel.parse('Shift')
+    shift = excel.parse(shift_scenario)
     period = excel.parse('Plan_Period')
     skill = excel.parse('Service_Skills')
 
@@ -27,7 +27,7 @@ def construct_model_data(data_file, staff_type='circulator'):
 
     # set of time buckets
     # TODO: need a mapping from number to explanation of the time bucket
-    P2_t = set(range(13))
+    P2_t = set(range(len(TIME_BUCKET)))
 
     # 1 if shift s is available at time bucket t; 0 otherwise
     # dictionary type: (s, t): 1/0
@@ -77,6 +77,9 @@ def construct_model_data(data_file, staff_type='circulator'):
               'P4_k':       P4_k,
               'P5_sk':      P5_sk,
               'P6_d':       P6_d,
+              'P7_ktd':     P7_ktd,
+              'P8_ktd':     P8_ktd,
+              'P9_ktd':     P9_ktd,
               'P10_ktd':    P10_ktd,
               'P11_k':      P11_k,
               'P12_k':      P12_k,
@@ -86,9 +89,6 @@ def construct_model_data(data_file, staff_type='circulator'):
 
 
 def _construct_shift_time_param(shift, P1_s, P2_t):
-    # 7:00-9:00; 9:00-11:00; 11:00-13:00; 13:00-14:00; 14:00-15:00; 15:00-16:00;
-    # 16:00-17:00, 17:00-18:00; 18:00-19:00; 19:00-20:00; 20:00-21:00; 21:00-23:00; 23:00-7:00
-    # detail information, please refer to config.py
     res = dict()
     for s in P1_s:
         start = shift.loc[shift.Shift_Type == s, "Shift_Start_Time"].values[0]
@@ -97,6 +97,8 @@ def _construct_shift_time_param(shift, P1_s, P2_t):
             _t_start = TIME_BUCKET[t]['start']
             _t_end = TIME_BUCKET[t]['end']
             if (start <= _t_start <= end) and (start <= _t_end <= end):
+                res[(s, t)] = 1
+            elif (s == 'G') and (start <= _t_start):
                 res[(s, t)] = 1
             else:
                 res[(s, t)] = 0
@@ -127,8 +129,8 @@ def _construct_block_demand(block, P4_k, P2_t, P6_d, staff_type):
     len_df = len(block)
     for i in range(len_df):
         _record = block.iloc[i]
-        start = _record.Demand_Start_Time
-        end = _record.Demand_End_Time
+        start = _record.Demand_Start_Time_Rounded
+        end = _record.Demand_End_Time_Rounded
         k = _record.Skill
         d = _record.Plan_Period
         is_OSC = _record['OSC?']
@@ -147,18 +149,18 @@ def _construct_block_demand(block, P4_k, P2_t, P6_d, staff_type):
 def _construct_break_demand(P7_ktd):
     res = dict()
     for (k, t, d) in P7_ktd:
-        if t == 5 or t == 8:
+        if t == 3 or t == 5 or t == 8 or t == 11:
             continue
         else:
-            if t == 4 or t == 7:
+            if t == 2 or t == 4 or t == 7 or t == 10:
                 conversion = BREAK_CONVERSION[t]
-                num_breakers = P7_ktd[(k, t, d)] * conversion
+                num_breakers = max(P7_ktd[(k, t, d)], P7_ktd[(k, t, d)]) * conversion
                 int_num_breakers = int(num_breakers)
                 decimal_num_breakers = num_breakers - int_num_breakers
-                res[(k, t, d)] = int_num_breakers + (3/2.) * decimal_num_breakers
-                res[(k, t+1, d)] = int_num_breakers/2.
+                res[(k, t, d)] = int_num_breakers + ((1/conversion)/2.) * decimal_num_breakers
+                res[(k, t+1, d)] = int_num_breakers
             else:
-                res[(k, t, d)] = P7_ktd[(k, t, d)] * BREAK_CONVERSION[t]
+                res[(k, t, d)] = 0
 
     return res
 

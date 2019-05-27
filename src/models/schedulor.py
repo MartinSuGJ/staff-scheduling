@@ -12,14 +12,14 @@ from gurobipy import *
 import itertools
 
 
-def shift_assignment(data_file='data/Staff Scheduling Model_Input Templates.xlsx'):
+def shift_assignment(data_file, staff_type, shift_scenario):
     # TODO: maximum number of available nurses by skill
     # TODO: maximum number of nurse working hours groupby week (FTE)
 
     ####################################################
     ##  PREPARE PARAMETERS OF SHIFT SCHEDULING MODEL  ##
     ####################################################
-    params = construct_model_data(data_file)
+    params = construct_model_data(data_file, staff_type, shift_scenario)
 
     m = Model("shift-scheduling")
 
@@ -76,9 +76,9 @@ def shift_assignment(data_file='data/Staff Scheduling Model_Input Templates.xlsx
     ######################
     ##  PARSE SOLUTION  ##
     ######################
-    records = parse_solution(X_skd, params)
+    output = parse_solution(X_skd, params)
 
-    return X_skd, params, records
+    return X_skd, params, output
 
 
 
