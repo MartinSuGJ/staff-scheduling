@@ -54,6 +54,9 @@ BREAK_CONVERSION = {
 #     ''
 # }
 
+# OT Time Bucket
+# [0, 1, 2, 3, 4, 5, 6, 7, 17, 18, 19, 20, 21, 22, 23]
+
 
 COST_BY_SKILL_PER_HOUR = {'Base':               1,
                           'Base_Ortho':         3,

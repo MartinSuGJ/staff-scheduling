@@ -1,0 +1,41 @@
+###############################
+##  Overall Metrics
+###############################
+(circulator) Total nurse hours is 5779.0
+(circulator) Total nurse number is 516.0
+
+###############################
+##  Skill Breakdown
+###############################
+Skill_Group
+Base                0.724806
+Base_Ortho          0.133721
+Base_Ortho_Neuro    0.124031
+Base_Transplant     0.017442
+Name: Number, dtype: float64
+Skill_Group
+Base                0.723482
+Base_Ortho          0.132203
+Base_Ortho_Neuro    0.126839
+Base_Transplant     0.017477
+Name: Total_Hours, dtype: float64
+
+###############################
+##  Shift Breakdown
+###############################
+Shift
+A10    0.459302
+D      0.085271
+F      0.073643
+G      0.058140
+I      0.023256
+T      0.300388
+Name: Number, dtype: float64
+Shift
+A10    0.451116
+D      0.060910
+F      0.078906
+G      0.062295
+I      0.024918
+T      0.321855
+Name: Total_Hours, dtype: float64

@@ -1,0 +1,39 @@
+###############################
+##  Overall Metrics
+###############################
+(scrub) Total nurse hours is 5056.0
+(scrub) Total nurse number is 434.0
+
+###############################
+##  Skill Breakdown
+###############################
+Skill_Group
+Base                0.622120
+Base_Ortho          0.152074
+Base_Ortho_Neuro    0.207373
+Base_Transplant     0.018433
+Name: Number, dtype: float64
+Skill_Group
+Base                0.640032
+Base_Ortho          0.151108
+Base_Ortho_Neuro    0.189873
+Base_Transplant     0.018987
+Name: Total_Hours, dtype: float64
+
+###############################
+##  Shift Breakdown
+###############################
+Shift
+D    0.087558
+F    0.509217
+G    0.069124
+I    0.025346
+T    0.308756
+Name: Number, dtype: float64
+Shift
+D    0.060127
+F    0.524525
+G    0.071203
+I    0.026108
+T    0.318038
+Name: Total_Hours, dtype: float64

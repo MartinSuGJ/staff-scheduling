@@ -1,1 +1,4 @@
 *.xlsx
+*.pyc
+*.DS_Store
+*.xml

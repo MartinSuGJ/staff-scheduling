@@ -7,6 +7,7 @@
 # @Software: PyCharm
 
 import pandas as pd
+import re
 from config import *
 
 
@@ -16,6 +17,7 @@ def construct_model_data(data_file, staff_type, shift_scenario):
     shift = excel.parse(shift_scenario)
     period = excel.parse('Plan_Period')
     skill = excel.parse('Service_Skills')
+    overtime = excel.parse('OT_Demand_avg')
 
 
     ##################
@@ -50,7 +52,7 @@ def construct_model_data(data_file, staff_type, shift_scenario):
     P8_ktd = _construct_break_demand(P7_ktd)
 
     # number of nurses with skill k at time bucket t on day d are needed for overtime
-    P9_ktd = _construct_overtime_demand(P7_ktd)
+    P9_ktd = _construct_overtime_demand(overtime, P7_ktd)
 
     # sum of the total demand
     P10_ktd = _sum_total_demand(P7_ktd, P8_ktd, P9_ktd)
@@ -165,10 +167,29 @@ def _construct_break_demand(P7_ktd):
     return res
 
 
-def _construct_overtime_demand(P7_ktd):
+def _construct_overtime_demand(overtime, P7_ktd):
     res = dict()
+    # Initialize the overtime demand
     for (k, t, d) in P7_ktd:
         res[(k, t, d)] = 0.
+
+    skills = ['Base', 'Base_Ortho', 'Base_Ortho_Neuro', 'Base_Transplant']
+    for i in range(len(overtime)):
+        _row = overtime.iloc[i]
+        _d = _row.Plan_Period
+        for k in skills:
+            _ot_demand = _row[k]
+            _ot_demand = [float(it) for it in re.findall(r'[-+]?([0-9]*\.[0-9]+|[0-9]+)', _ot_demand)]
+            _ot_demand = _ot_demand[8:]
+            for _t, _ot_d in enumerate(_ot_demand):
+                t = _t + 10
+                if _t >= 1:
+                    res[(k, t, _d)] += max(_ot_d - P7_ktd[(k, t, _d)], 0)
+
+    # modify the late night demand to ensure we assign the night shift for each day
+    for (k, t, d) in P7_ktd:
+        if t >= 12 and res[(k, t, d)] == 0 and k == 'Base':
+            res[(k, t, d)] += 0.01
 
     return res
 
@@ -178,6 +199,12 @@ def _sum_total_demand(P7_ktd, P8_ktd, P9_ktd):
     for (k, t, d) in P7_ktd:
         res[(k, t, d)] = P7_ktd[(k, t, d)] + P8_ktd[(k, t, d)] + P9_ktd[(k, t, d)]
 
+    for (k, t, d) in P7_ktd:
+        # Add Neuro Buffer
+        if k == 'Base_Ortho_Neuro' and res[(k, 1, d)] > 0:
+            res[(k, 1, d)] += 1
+            res[('Base', 1, d)] -= 1
+
     return res
 
 
@@ -185,8 +212,13 @@ def _compute_nurse_cost_by_skill_and_shift(shift, P1_s, P4_k):
     res = dict()
     for s in P1_s:
         _shift_length = shift.loc[shift.Shift_Type == s, 'Shift_Length'].values[0]
+        # TODO: add start time preference
+        _start = shift.loc[shift.Shift_Type == s, 'Shift_Start_Time'].values[0]
+        _additional_cost = 0
+        if _start == 7:
+            _additional_cost = 5
         for k in P4_k:
-            res[(s, k)] = COST_BY_SKILL_PER_HOUR[k] * _shift_length
+            res[(s, k)] = COST_BY_SKILL_PER_HOUR[k] * _shift_length + _additional_cost
 
     return res
 
