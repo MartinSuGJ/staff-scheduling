@@ -28,7 +28,6 @@ def construct_model_data(data_file, staff_type, shift_scenario):
     P1_s_hours = _construct_shift_hours(shift, P1_s)
 
     # set of time buckets
-    # TODO: need a mapping from number to explanation of the time bucket
     P2_t = set(range(len(TIME_BUCKET)))
 
     # 1 if shift s is available at time bucket t; 0 otherwise
@@ -91,6 +90,15 @@ def construct_model_data(data_file, staff_type, shift_scenario):
 
 
 def _construct_shift_time_param(shift, P1_s, P2_t):
+    """
+    Construct a dictionary to specify availability of each shift at each time bucket, e.g. 'F' starts from 7 to 19,
+    then res[('F', 0)] to res[('F', 11)] equals to 1; res[('F', 12)] to res[('F', 16)] equals to 0
+
+    :param shift: pd.DataFrame of shift
+    :param P1_s: set of shifts
+    :param P2_t: set of time bucket
+    :return: a dictionary with key of shift and time bucket to specify availability of each shit at each time bucket
+    """
     res = dict()
     for s in P1_s:
         start = shift.loc[shift.Shift_Type == s, "Shift_Start_Time"].values[0]
@@ -109,6 +117,12 @@ def _construct_shift_time_param(shift, P1_s, P2_t):
 
 
 def _process_skill_group(skill):
+    """
+    Mapping specific skillset into skillset group.
+
+    :param skill: string, name of any specific skillset
+    :return: string, name of its belonging skillset group
+    """
     if skill == 'Transplant':
         return skill
     elif skill == 'Orthopedics':
@@ -120,8 +134,19 @@ def _process_skill_group(skill):
 
 
 def _construct_block_demand(block, P4_k, P2_t, P6_d, staff_type):
-    # TODO: OSC ORs (OR5/6/7 Mon-Thur) need 2 CIRCULATORS
+    """
+    Construct a dictionary, res[(k, t, d)], to specify minimum number of nurses with skill k at time bucket t on day d
+    in order to meet the block demand. Now, we assume 100% utilization of block hours. Also, we have already considered
+    the special requirement for block with 'OSC' tag. For a block with 'OSC' tag, two circulators and 1 scrub techs are
+    required to be staffed for that block
 
+    :param block: pd.DataFrame, block schedule dataframe
+    :param P4_k: set of skillset group
+    :param P2_t: set of time bucket
+    :param P6_d: set of plan periods (day)
+    :param staff_type: string to specify staff_type, e.g. 'circulator', or 'scrub'
+    :return: a dictionary, res[(k, t, d)]
+    """
     res = dict()
     for k in P4_k:
         for t in P2_t:
@@ -149,6 +174,15 @@ def _construct_block_demand(block, P4_k, P2_t, P6_d, staff_type):
 
 
 def _construct_break_demand(P7_ktd):
+    """
+    Construct a dictionary, res[(k, t, d)], to specify minimum number of nurses with skill k at time bucket t on day d
+    in order to meet the breaker demand. Now, we assume the breaker schedule (time) and ratio are fixed. You can play
+    around with different schedule or ratio in the configuration file. Note, the breaker demand is proportional to the
+    normal block demand, so we calculate the breakder demand based on the normal block demand.
+
+    :param P7_ktd: dictionary, normal block demand.
+    :return: a dictionary, res[(k, t, d)]
+    """
     res = dict()
     for (k, t, d) in P7_ktd:
         if t == 3 or t == 5 or t == 8 or t == 11:
@@ -168,6 +202,15 @@ def _construct_break_demand(P7_ktd):
 
 
 def _construct_overtime_demand(overtime, P7_ktd):
+    """
+    Construct a dictionary, res[(k, t, d)], to specify minimum number of nurses with skill k at time bucket t on day d
+    in order to meet the over-block/OT demand. Now, we use summer 2018 data to summarize the over-block demand by day of
+    week and by types of skillset group. Now, we use R to process the historical data and input into this model.
+
+    :param overtime: pd.DataFrame, overtime schedule dataframe
+    :param P7_ktd: dictionary, normal block demand
+    :return: a dictionary, res[(k, t, d)]
+    """
     res = dict()
     # Initialize the overtime demand
     for (k, t, d) in P7_ktd:
@@ -195,13 +238,29 @@ def _construct_overtime_demand(overtime, P7_ktd):
 
 
 def _sum_total_demand(P7_ktd, P8_ktd, P9_ktd):
+    """
+    Construct a dictionary, res[(k, t, d)], to specify minimum number of nurses with skill k at time bucket t on day d
+    in order to meet the block, breaker, and overtime demand. We sum up the demand from normal block demand, breakder
+    demand and overtime demand.
+
+    Also, we consider the 'Neuro Buffer' constraint, i.e. staffing one more 'Neuro' nurse and one less 'Base' nurse if
+    there is any demand for 'Neuro' on that day.
+
+    Note: The way that we deal with 'Neuro Buffer' is stupid but effective for current block schedule. This could be
+    coded in a smarter way.
+
+    :param P7_ktd: dictionary, block demand
+    :param P8_ktd: dictionary, breaker demand
+    :param P9_ktd: dictionary, overtime demand
+    :return: a dictionary, res[(k, t, d)]
+    """
     res = dict()
     for (k, t, d) in P7_ktd:
         res[(k, t, d)] = P7_ktd[(k, t, d)] + P8_ktd[(k, t, d)] + P9_ktd[(k, t, d)]
 
     for (k, t, d) in P7_ktd:
         # Add Neuro Buffer
-        if k == 'Base_Ortho_Neuro' and res[(k, 1, d)] > 0:
+        if k == 'Base_Ortho_Neuro' and res[(k, 1, d)] > 0 and t == 1:
             res[(k, 1, d)] += 1
             res[('Base', 1, d)] -= 1
 
@@ -209,6 +268,17 @@ def _sum_total_demand(P7_ktd, P8_ktd, P9_ktd):
 
 
 def _compute_nurse_cost_by_skill_and_shift(shift, P1_s, P4_k):
+    """
+    Construct a dictionary, res[(s, k)], to specify cost of staffing per nurse with skill k to shift s.
+
+    The cost is equal to hourly_cost_by_skill * length_of_shift. The hourly_cost_by_skill is specified in config.py, see
+    'COST_BY_SKILL_PER_HOUR'.
+
+    :param shift: pd.DataFrame, shift dataframe
+    :param P1_s: set of shift
+    :param P4_k: set of skillset group
+    :return: a dictionary, res[(s, k)]
+    """
     res = dict()
     for s in P1_s:
         _shift_length = shift.loc[shift.Shift_Type == s, 'Shift_Length'].values[0]
@@ -224,6 +294,14 @@ def _compute_nurse_cost_by_skill_and_shift(shift, P1_s, P4_k):
 
 
 def _construct_shift_hours(shift, P1_s):
+    """
+    Construct a dictionary, res[(s)], to specify hours of each shift, and it includes shift start time, shift end time,
+    and shift length.
+
+    :param shift: pd.DataFrame, shift dataframe
+    :param P1_s: set of shift
+    :return: a dictionary, res[(s)]
+    """
     res = dict()
     for s in P1_s:
         _shift_length = shift.loc[shift.Shift_Type == s, 'Shift_Length'].values[0]
@@ -235,6 +313,12 @@ def _construct_shift_hours(shift, P1_s):
 
 
 def _construct_skill(skill):
+    """
+    Return set of skillset group, and mapping from service to skillset group.
+
+    :param skill: pd.DataFrame, skill dataframe
+    :return: skills_set (set of skillset group), and service_skill_mapping (mapping from service to skillset group)
+    """
     skills_set = set(skill.Skill.unique().tolist())
     service_skill_mapping = dict()
     for i in range(len(skill)):
