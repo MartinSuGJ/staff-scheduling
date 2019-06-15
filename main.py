@@ -11,10 +11,25 @@ from src.util.utils import *
 
 
 if __name__ == '__main__':
-    data_file = 'data/Staff Scheduling Model_Input Templates_v16.xlsx'
+    data_file = 'data/Staff Scheduling Model_Input Templates_v16.xlsx'  # path to input file
+
+    # for loop to all staff types and scenarios
+    # there are two staff types, which are 'circulator' and 'scrub'
+    # currently, we have 4 different scenarios
     for staff_type in ['circulator', 'scrub']:
         for shift_scenario in [f'Shift_SC{i}' for i in range(1, 5)]:
+            # call the
             X_skd, params, output = shift_assignment(data_file, staff_type, shift_scenario)
+
+            # TODO: the output is not well developed, please help to develop it in the futuer!!
+
+            #####################################
+            ##  OUTPUT EXCEL FILE              ##
+            ##  1. shift_assignment            ##
+            ##  2. demand_supply               ##
+            ##  3. supply_excess_analysis      ##
+            ##  4. shift_time:                 ##
+            #####################################
             excel = pd.ExcelWriter(f'result/v16_ot_avg/with_ot_shift_assignment_v16_{staff_type}_{shift_scenario}.xlsx')
 
             df = pd.DataFrame(output['records'])
@@ -47,6 +62,11 @@ if __name__ == '__main__':
             shift_time_df.to_excel(excel, 'shift_time', index=False)
 
             excel.save()
+
+            ######################################################
+            ##  OUTPUT TXT FILE                                 ##
+            ##  - Some overall metrics of the shift assignment  ##
+            ######################################################
 
             with open(f'result/v16_ot_avg/with_ot_shift_assignment_v16_{staff_type}_{shift_scenario}.txt', 'w') as f:
                 f.write(print_head_block('Overall Metrics'))
