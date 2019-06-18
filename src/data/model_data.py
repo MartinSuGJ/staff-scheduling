@@ -17,7 +17,7 @@ def construct_model_data(data_file, staff_type, shift_scenario):
     shift = excel.parse(shift_scenario)
     period = excel.parse('Plan_Period')
     skill = excel.parse('Service_Skills')
-    overtime = excel.parse('OT_Demand_avg')
+    overtime = excel.parse('OT_Demand_75')
 
 
     ##################
@@ -260,9 +260,9 @@ def _sum_total_demand(P7_ktd, P8_ktd, P9_ktd):
 
     for (k, t, d) in P7_ktd:
         # Add Neuro Buffer
-        if k == 'Base_Ortho_Neuro' and res[(k, 1, d)] > 0 and t == 1:
-            res[(k, 1, d)] += 1
-            res[('Base', 1, d)] -= 1
+        if k == 'Base_Ortho_Neuro' and res[(k, 1, d)] > 0 and t >= 0 and t <= 9:
+            res[(k, t, d)] += 1
+            res[('Base', t, d)] -= 1
 
     return res
 

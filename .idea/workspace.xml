@@ -5,14 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gurobi.log" beforeDir="false" afterPath="$PROJECT_DIR$/gurobi.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/result/v16_ot_avg/with_ot_shift_assignment_v16_circulator_Shift_SC1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/result/v16_ot_avg/with_ot_shift_assignment_v16_circulator_Shift_SC2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/result/v16_ot_avg/with_ot_shift_assignment_v16_circulator_Shift_SC3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/result/v16_ot_avg/with_ot_shift_assignment_v16_circulator_Shift_SC4.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/result/v16_ot_avg/with_ot_shift_assignment_v16_scrub_Shift_SC1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/result/v16_ot_avg/with_ot_shift_assignment_v16_scrub_Shift_SC2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/result/v16_ot_avg/with_ot_shift_assignment_v16_scrub_Shift_SC3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/result/v16_ot_avg/with_ot_shift_assignment_v16_scrub_Shift_SC4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/model_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/model_data.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,17 +17,25 @@
     <SUITE FILE_PATH="coverage/staff_scheduling$main.coverage" NAME="main Coverage Results" MODIFIED="1558855377371" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5689866">
+    <splitter split-orientation="horizontal" split-proportion="0.63614166">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/config.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="570">
+                  <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/main.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="149">
-                  <caret line="25" column="12" lean-forward="true" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="91" />
+                <state relative-caret-position="316">
+                  <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
                   <folding>
                     <element signature="e#172#206#0" expanded="true" />
-                    <element signature="e#2500#2772#0" />
                   </folding>
                 </state>
               </provider>
@@ -43,8 +44,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/data/model_data.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="278">
-                  <caret line="262" column="68" selection-start-line="262" selection-start-column="68" selection-end-line="262" selection-end-column="68" />
+                <state relative-caret-position="206">
+                  <caret line="239" column="21" selection-start-line="239" selection-start-column="4" selection-end-line="239" selection-end-column="21" />
                   <folding>
                     <element signature="e#178#197#0" expanded="true" />
                   </folding>
@@ -54,14 +55,21 @@
           </file>
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/notebooks/report_generator.py">
-              <provider selected="true" editor-type-id="text-editor" />
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1680">
+                  <caret line="114" column="74" selection-start-line="114" selection-start-column="74" selection-end-line="114" selection-end-column="74" />
+                </state>
+              </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/models/schedulor.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="150">
-                  <caret line="10" column="13" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="13" />
+                <state relative-caret-position="255">
+                  <caret line="17" selection-start-line="17" selection-end-line="17" />
+                  <folding>
+                    <element signature="e#177#210#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -69,12 +77,12 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/notebooks/report_generator.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-253">
-                  <caret line="41" selection-start-line="41" selection-end-line="43" selection-end-column="73" />
+                <state relative-caret-position="468">
+                  <caret line="94" column="8" selection-start-line="94" selection-start-column="8" selection-end-line="94" selection-end-column="194" />
                 </state>
               </provider>
             </entry>
@@ -98,10 +106,11 @@
       <find>P5</find>
       <find>Fri_W5</find>
       <find>_construct_block_demand</find>
-      <find>avg</find>
       <find>_construct_skill</find>
-      <find>shift_assignment</find>
       <find>shift_scenario</find>
+      <find>avg</find>
+      <find>shift_assignment</find>
+      <find>_sum</find>
     </findStrings>
     <replaceStrings>
       <replace>hashlib.sha224</replace>
@@ -109,6 +118,7 @@
       <replace>W3</replace>
       <replace>W4</replace>
       <replace>W5</replace>
+      <replace>75</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -124,8 +134,8 @@
         <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/src/models/schedulor.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/src/data/model_data.py" />
+        <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
   </component>
@@ -145,51 +155,6 @@
             <path>
               <item name="staff-scheduling" type="b2602c69:ProjectViewProjectNode" />
               <item name="staff-scheduling" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="staff-scheduling" type="b2602c69:ProjectViewProjectNode" />
-              <item name="staff-scheduling" type="462c0819:PsiDirectoryNode" />
-              <item name="notebooks" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="staff-scheduling" type="b2602c69:ProjectViewProjectNode" />
-              <item name="staff-scheduling" type="462c0819:PsiDirectoryNode" />
-              <item name="result" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="staff-scheduling" type="b2602c69:ProjectViewProjectNode" />
-              <item name="staff-scheduling" type="462c0819:PsiDirectoryNode" />
-              <item name="result" type="462c0819:PsiDirectoryNode" />
-              <item name="v16_ot_avg" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="staff-scheduling" type="b2602c69:ProjectViewProjectNode" />
-              <item name="staff-scheduling" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="staff-scheduling" type="b2602c69:ProjectViewProjectNode" />
-              <item name="staff-scheduling" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="staff-scheduling" type="b2602c69:ProjectViewProjectNode" />
-              <item name="staff-scheduling" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="staff-scheduling" type="b2602c69:ProjectViewProjectNode" />
-              <item name="staff-scheduling" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="staff-scheduling" type="b2602c69:ProjectViewProjectNode" />
-              <item name="staff-scheduling" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="visualization" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -280,21 +245,25 @@
       <workItem from="1560366838075" duration="1128000" />
       <workItem from="1560462227245" duration="6651000" />
       <workItem from="1560839692411" duration="3298000" />
+      <workItem from="1560866241550" duration="1906000" />
+      <workItem from="1560868834274" duration="486000" />
+      <workItem from="1560869363919" duration="2672000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57914000" />
+    <option name="totallyTimeSpent" value="62978000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="1027" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.33577535" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12271062" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3299363" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.47593582" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.25882354" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -304,7 +273,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.32950193" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="12" visible="true" weight="0.5957219" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.2748663" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -317,7 +286,7 @@
     <option name="version" value="1" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/staff_scheduling$main.coverage" NAME="main Coverage Results" MODIFIED="1560865176982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/staff_scheduling$main.coverage" NAME="main Coverage Results" MODIFIED="1560875563994" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/data/input_simulator.py" />
@@ -332,13 +301,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/data/data_structure.py" />
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="33" lean-forward="true" selection-start-line="24" selection-start-column="33" selection-end-line="24" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/models/solution_parser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -358,18 +320,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/models/schedulor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="13" />
+        <state relative-caret-position="255">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="e#177#210#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/notebooks/report_generator.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1680">
+          <caret line="114" column="74" selection-start-line="114" selection-start-column="74" selection-end-line="114" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/data/model_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="262" column="68" selection-start-line="262" selection-start-column="68" selection-end-line="262" selection-end-column="68" />
+        <state relative-caret-position="206">
+          <caret line="239" column="21" selection-start-line="239" selection-start-column="4" selection-end-line="239" selection-end-column="21" />
           <folding>
             <element signature="e#178#197#0" expanded="true" />
           </folding>
@@ -378,11 +354,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="25" column="12" lean-forward="true" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="91" />
+        <state relative-caret-position="316">
+          <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
           <folding>
             <element signature="e#172#206#0" expanded="true" />
-            <element signature="e#2500#2772#0" />
           </folding>
         </state>
       </provider>
